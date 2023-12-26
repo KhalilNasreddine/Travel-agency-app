@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'register.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -47,9 +48,16 @@ class _HomeState extends State<Home> {
             Container(
               width: 150,
             height: 50,
-            child: ElevatedButton.icon(onPressed: (){},
+            child: ElevatedButton.icon(onPressed: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) => const Register()
+              ),
+              );
+            },
                 //child: const Text("Log in", style: TextStyle(fontSize: 15),),
-              label: Text("Sign In", style: TextStyle(fontSize: 25),),
+              label: Text("Log In", style: TextStyle(fontSize: 25),),
               icon: Icon(Icons.login),
 
             ),
