@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'home.dart';
 
 const String _baseURL='https://travelagencyapplication.000webhostapp.com/';
 EncryptedSharedPreferences _encryptedData = EncryptedSharedPreferences();
@@ -85,40 +87,63 @@ class _RegisterState extends State<Register> {
                       ),
                       child: Column(
                         children: <Widget>[
+
                           Container(
                             decoration: BoxDecoration(
                               border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: _controllerName,
                               decoration: InputDecoration(
                                 hintText: "Name",
                                 hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none
+
                               ),
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Name';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               decoration: InputDecoration(
                                   hintText: "Username",
                                   hintStyle: TextStyle(color: Colors.grey),
                                   border: InputBorder.none
                               ),
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Username';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
-                            child: TextField(
+                            child: TextFormField(
+                              obscureText: true,
                               decoration: InputDecoration(
                                   hintText: "Password",
+                                  //icon: Icon(CupertinoIcons.eye_slash),
                                   hintStyle: TextStyle(color: Colors.grey),
                                   border: InputBorder.none
                               ),
+                              validator: (String? value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Password';
+                                }
+                                return null;
+                              },
                             ),
                           )
                         ],
@@ -142,8 +167,30 @@ class _RegisterState extends State<Register> {
                         borderRadius: BorderRadius.circular(50),
                         color: Colors.orange
                       ),
-                      child: Center(
-                        child: Text("Sign Up", style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+                      child: ElevatedButton.icon(
+                        onPressed: _loading ? null : () { // disable button while loading
+                            setState(() {
+                              _loading = true;
+                            });
+                            signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(),_controllerPassword.text.toString());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Home()
+                              ),
+                            );
+                        },
+                        /*onPressed: (){
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Register()
+                            ),
+                          );
+                        },*/
+                        label: Text("Sign Up", style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+                        icon: Icon(Icons.create),
                       ),
                     )
                   ],
@@ -154,5 +201,24 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+}
+void signUp(Function(String text) update, String name, String userName, String password)async{
+  try{
+    final response = await http.post(
+        Uri.parse('$_baseURL/register.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        }, // convert the cid, name and key to a JSON object
+        body: convert.jsonEncode(<String, String>{
+          'Name': name, 'Username': userName, 'Password': password
+        })).timeout(const Duration(seconds: 5));
+    if (response.statusCode == 200) {
+      // if successful, call the update function
+      update(response.body);
+    }
+  }
+  catch(e){
+    update("Connection Error");
   }
 }

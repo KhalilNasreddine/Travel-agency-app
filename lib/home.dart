@@ -49,12 +49,7 @@ class _HomeState extends State<Home> {
               width: 150,
             height: 50,
             child: ElevatedButton.icon(onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                  builder: (context) => const Register()
-              ),
-              );
+
             },
                 //child: const Text("Log in", style: TextStyle(fontSize: 15),),
               label: Text("Log In", style: TextStyle(fontSize: 25),),
@@ -67,7 +62,14 @@ class _HomeState extends State<Home> {
             Container(
               width: 150,
               height: 50,
-              child: ElevatedButton.icon(onPressed: (){},
+              child: ElevatedButton.icon(onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Register()
+                  ),
+                );
+              },
                 //child: const Text("Log in", style: TextStyle(fontSize: 15),),
                 label: Text("Sign up ", style: TextStyle(fontSize: 25),),
                 icon: Icon(Icons.create),
