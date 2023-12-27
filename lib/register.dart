@@ -113,6 +113,7 @@ class _RegisterState extends State<Register> {
                                 border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
                             child: TextFormField(
+                              controller: _controllerUserName,
                               decoration: InputDecoration(
                                   hintText: "Username",
                                   hintStyle: TextStyle(color: Colors.grey),
@@ -131,6 +132,7 @@ class _RegisterState extends State<Register> {
                                 border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
                             child: TextFormField(
+                              controller: _controllerPassword,
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintText: "Password",
@@ -172,13 +174,34 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               _loading = true;
                             });
-                            signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(),_controllerPassword.text.toString());
+
+                            if(_controllerPassword.text.isNotEmpty &&_controllerUserName.text.isNotEmpty && _controllerName.text.isNotEmpty){
+                              signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(),_controllerPassword.text.toString());
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const Home()
                               ),
-                            );
+                            );}
+                            else{
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Registration failed'),
+                                    content: Text('Please enter all fields'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                         },
                         /*onPressed: (){
 
