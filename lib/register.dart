@@ -61,20 +61,26 @@ class _RegisterState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Sign Up", style: TextStyle(fontSize: 35, color: Colors.white),)
+                  Center(
+                  child: Text("Sign Up", style: TextStyle(fontSize: 50, color: Colors.white),)
+                  ),
                 ],
               ),
             ),
-            Expanded(child: Container(
+
+            Center(child: Container(
+              width: 500,
+              height: 400,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40), bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40))
               ),
               child: Padding(
                 padding: EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
                     Container(
+
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -87,7 +93,6 @@ class _RegisterState extends State<Register> {
                       ),
                       child: Column(
                         children: <Widget>[
-
                           Container(
                             decoration: BoxDecoration(
                               border: Border(bottom: BorderSide(color: Colors.grey))
@@ -132,9 +137,11 @@ class _RegisterState extends State<Register> {
                                 border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
                             child: TextFormField(
+
                               controller: _controllerPassword,
                               obscureText: true,
                               decoration: InputDecoration(
+
                                   hintText: "Password",
                                   //icon: Icon(CupertinoIcons.eye_slash),
                                   hintStyle: TextStyle(color: Colors.grey),
@@ -170,16 +177,16 @@ class _RegisterState extends State<Register> {
                         color: Colors.orange
                       ),
                       child: ElevatedButton.icon(
+                        key: Key("Submit"),
                         onPressed: _loading ? null : () { // disable button while loading
                             setState(() {
                               _loading = true;
                             });
-
                             if(_controllerPassword.text.isNotEmpty &&_controllerUserName.text.isNotEmpty && _controllerName.text.isNotEmpty){
                               signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(),_controllerPassword.text.toString());
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
                                   builder: (context) => const Home()
                               ),
                             );}
@@ -194,7 +201,12 @@ class _RegisterState extends State<Register> {
                                       TextButton(
                                         child: Text('OK'),
                                         onPressed: () {
-                                          Navigator.of(context).pop();
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => const Register()
+                                            ),
+                                          );
                                         },
                                       ),
                                     ],
