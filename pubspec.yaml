@@ -37,7 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   encrypted_shared_preferences: ^3.0.1
   http: ^1.1.0
-
+  stylish_bottom_bar: ^1.0.3
+  google_nav_bar: ^5.0.6
+  ticket_widget: ^0.0.1
+  flutter_linkify: ^6.0.0
+  url_launcher: ^6.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,3 +96,23 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 assets:
   - assets/images/logo.png
+  - assets/images/austriaFlag.png
+  - assets/images/baliFlag.png
+  - assets/images/greeceFlag.png
+  - assets/images/italyFlag.png
+  - assets/images/turkeyFlag.png
+  - assets/images/austriaDerWilhelmshof4.jpg
+  - assets/images/austriaFalkensteinerSchlosshotelVelden5.jpg
+  - assets/images/austriaHotelPensionBlobergerHof3.jpg
+  - assets/images/baliAdiwanaUnagiSuites4.jpg
+  - assets/images/baliEastinAshtaResortCanggu3.jpg
+  - assets/images/baliPadmaResortUbud5.jpg
+  - assets/images/greeceCanavesEpitome5.jpg
+  - assets/images/greecePortoVenezianoHotel3.jpg
+  - assets/images/greeceTheAthensGateHotel4.jpg
+  - assets/images/italyDharmaBoutiqueHotel&Spa4.jpg
+  - assets/images/italyHotelSantaMaria3.jpg
+  - assets/images/italyMazzaroSeaPalace5.jpg
+  - assets/images/turkeyLaKumsalHotel3.jpg
+  - assets/images/turkeyLaraBarutCollection5.jpg
+  - assets/images/turkeyTuvanaHotel4.jpg
