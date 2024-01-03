@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'home.dart';
+import 'home2.dart';
+import 'login.dart';
 
 const String _baseURL='https://travelagencyapplication.000webhostapp.com/';
 EncryptedSharedPreferences _encryptedData = EncryptedSharedPreferences();
@@ -42,15 +44,15 @@ class _RegisterState extends State<Register> {
         width: double.infinity,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            colors: [
-              Colors.deepOrange,
-              Colors.deepOrangeAccent,
-              Colors.orange,
-              Colors.orangeAccent
-            ]
-          )
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                colors: [
+                  Colors.deepOrange,
+                  Colors.deepOrangeAccent,
+                  Colors.orange,
+                  Colors.orangeAccent
+                ]
+            )
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +64,7 @@ class _RegisterState extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                  child: Text("Sign Up", style: TextStyle(fontSize: 50, color: Colors.white),)
+                      child: Text("Sign Up", style: TextStyle(fontSize: 50, color: Colors.white),)
                   ),
                 ],
               ),
@@ -72,8 +74,8 @@ class _RegisterState extends State<Register> {
               width: 500,
               height: 400,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40), bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40))
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40), bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40))
               ),
               child: Padding(
                 padding: EdgeInsets.all(20),
@@ -82,27 +84,27 @@ class _RegisterState extends State<Register> {
                     Container(
 
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.orange,
-                            blurRadius: 20,
-                            offset: Offset(0, 10)
-                          )
-                        ]
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.orange,
+                                blurRadius: 20,
+                                offset: Offset(0, 10)
+                            )
+                          ]
                       ),
                       child: Column(
                         children: <Widget>[
                           Container(
                             decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: Colors.grey))
+                                border: Border(bottom: BorderSide(color: Colors.grey))
                             ),
                             child: TextFormField(
                               controller: _controllerName,
                               decoration: InputDecoration(
-                                hintText: "Name",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none
+                                  hintText: "Name",
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: InputBorder.none
 
                               ),
                               validator: (String? value) {
@@ -160,71 +162,77 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 40,),
                     GestureDetector(
-                      child: Text("Already Have An Account?", style: TextStyle(color: Colors.grey),),
-                      /*onTap: Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Login()
-                        ),
-                      );,*/
+                        child: Text("Already Have An Account?", style: TextStyle(color: Colors.grey),),
+                        onTap: (){setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogIn()
+                            ),
+                          );
+                        });}
                     ),
                     SizedBox(height: 40,),
                     Container(
                       height: 50,
                       margin: EdgeInsets.symmetric(horizontal: 50),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.orange
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.orange
                       ),
                       child: ElevatedButton.icon(
                         key: Key("Submit"),
-                        onPressed: _loading ? null : () { // disable button while loading
-                            setState(() {
-                              _loading = true;
-                            });
-                            if(_controllerPassword.text.isNotEmpty &&_controllerUserName.text.isNotEmpty && _controllerName.text.isNotEmpty){
-                              signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(),_controllerPassword.text.toString());
+                        onPressed: _loading
+                            ? null
+                            : () {
+                          setState(() {
+                            _loading = true;
+                          });
+                          if (_controllerPassword.text.isEmpty ||
+                              _controllerUserName.text.isEmpty ||
+                              _controllerName.text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Registration failed'),
+                                  content: Text('Please enter all fields'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        setState(() {
+                                          _loading = false; // Reset the loading state
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            signUp(update, _controllerName.text.toString(), _controllerUserName.text.toString(), _controllerPassword.text.toString()).then((_) {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Home()
-                              ),
-                            );}
-                            else{
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Registration failed'),
-                                    content: Text('Please enter all fields'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text('OK'),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => const Register()
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
+                                MaterialPageRoute(builder: (context) => const Home()),
                               );
-                            }
+                            }).catchError((error) {
+                              update("Connection Error");
+                              setState(() {
+                                _loading = false; // Reset the loading state
+                              });
+                            });
+                          }
                         },
-                        /*onPressed: (){
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Register()
-                            ),
-                          );
-                        },*/
-                        label: Text("Sign Up", style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
+                        label: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         icon: Icon(Icons.create),
                       ),
                     )
@@ -238,7 +246,7 @@ class _RegisterState extends State<Register> {
     );
   }
 }
-void signUp(Function(String text) update, String name, String userName, String password)async{
+Future<void> signUp(Function(String text) update, String name, String userName, String password)async{
   try{
     final response = await http.post(
         Uri.parse('$_baseURL/register.php'),
@@ -252,8 +260,10 @@ void signUp(Function(String text) update, String name, String userName, String p
       // if successful, call the update function
       update(response.body);
     }
+
   }
   catch(e){
     update("Connection Error");
+
   }
 }

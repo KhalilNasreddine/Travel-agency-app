@@ -95,7 +95,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 assets:
-  - assets/images/logo.png
+  - assets/images/logo1.png
   - assets/images/austriaFlag.png
   - assets/images/baliFlag.png
   - assets/images/greeceFlag.png
@@ -116,3 +116,21 @@ assets:
   - assets/images/turkeyLaKumsalHotel3.jpg
   - assets/images/turkeyLaraBarutCollection5.jpg
   - assets/images/turkeyTuvanaHotel4.jpg
+  - assets/images/austriaBlueMustard.jpg
+  - assets/images/austriaCuisinoCasinoRestaurant.jpg
+  - assets/images/austriaImlauerSkyBarRestaurant.jpg
+  - assets/images/baliCucina.jpg
+  - assets/images/baliKayuputi.jpg
+  - assets/images/baliKubuRestaurant.jpg
+  - assets/images/greeceVaroulkoRestaurant.jpg
+  - assets/images/greeceNammosRestaurants.jpg
+  - assets/images/greeceSantoro.jpg
+  - assets/images/italyMistralRestaurant.jpg
+  - assets/images/italyGrottaPalazzese.jpg
+  - assets/images/italyMonacoHotel.jpg
+  - assets/images/maldivesIthaaUnderseaRestaurant.jpg
+  - assets/images/maldivesSubsixRestaurant.jpg
+  - assets/images/maldivesAzzuroRestaurant.jpg
+  - assets/images/turkeyMikla.jpg
+  - assets/images/turkeyDenizRestaurant.jpg
+  - assets/images/turkeySekiRestaurant.jpg
